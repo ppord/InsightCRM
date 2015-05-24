@@ -53,10 +53,12 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'InsightCRM.urls'
 
+
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.media',
             ],
         },
     },
@@ -86,7 +89,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -101,7 +104,9 @@ EMAIL_HOST='smtp.yandex.ru'
 EMAIL_HOST_PASSWORD='q1w2e3r4'
 EMAIL_HOST_USER='robot@testcloud.ru'
 EMAIL_PORT=465
-EMAIL_USE_TLS=True
+EMAIL_USE_SSL=True
+DEFAULT_FROM_EMAIL = 'robot@testcloud.ru'
+
 
 
 # Static files (CSS, JavaScript, Images)

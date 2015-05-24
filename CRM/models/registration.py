@@ -1,17 +1,17 @@
 from django.db import models
 import hashlib
-from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+
 
 class Invite(models.Model):
-    invite=models.CharField(max_length=100)
+    invite=models.CharField(max_length=100, default = '')
     valid=models.BooleanField(default=True)
+    email = models.EmailField(null = False)
 
     def clean(self):
         m=hashlib.md5()
-        m.update(self.ticket.encode('utf-8'))
-        self.ticket=m.hexdigest()
+        m.update(self.invite.encode('utf-8'))
+        self.invite=m.hexdigest()
 
     def __str__(self):
-        vld='Использован' if not self.valid else 'Доступен'
-        return ('%s - %s' % (self.ticket, vld))
+        vld='Used' if not self.valid else 'Available'
+        return ('%s - %s' % (self.invite, vld))
