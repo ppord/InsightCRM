@@ -11,10 +11,47 @@
     </title>
 </head>
 <body>
+<div class="uk-grid">
+    <div class="uk-width-2-10">
+        <ul class="uk-nav uk-nav-side">
+            <li><a href="">Item</a></li>
+            <li><a href="">Item 2</a></li>
 
-{% block content %}
+            <li class="uk-parent">
+                <a href="#">Parent</a>
+                <ul class="uk-nav-sub">
+                    <li><a href="">Sub item</a></li>
+                    <li><a href="">Sub item</a>
+                        <ul>
+                            <li><a href="">Sub item</a></li>
+                            <li><a href="">Sub item</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
 
-{% endblock %}
+            <li class="uk-parent">
+                <a href="#">Parent</a>
+                <ul class="uk-nav-sub">
+                    <li><a href="">Sub item</a></li>
+                    <li><a href="">Sub item</a></li>
+                </ul>
+            </li>
 
+            <li><a href="">Item</a></li>
+
+            <li class="uk-nav-header">Header</li>
+            <li class="uk-parent"><a href=""><i class="uk-icon-star"></i> Parent</a></li>
+            <li><a href=""><i class="uk-icon-twitter"></i> Item</a></li>
+            <li class="uk-nav-divider"></li>
+            <li><a href=""><i class="uk-icon-rss"></i> Item</a></li>
+        </ul>
+    </div>
+    <div class="uk-width-7-10">
+    {% block content %}
+
+    {% endblock %}
+    </div>
+</div>
 </body>
 </html>
