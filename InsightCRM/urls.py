@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from CRM.views import send_register_mail, indexpage
+from CRM.views import send_register_mail, indexpage, register
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^mailrequest', send_register_mail),
+    url(r'^register', register),
     url(r'^$', indexpage),
 ]

@@ -23,11 +23,18 @@ def send_register_mail(request):
         print('sended')
         return render_to_response('info.html',
                                   {'infomsg': 'Email sended.'},
-                                  context_instance = RequestContext(request))
+                                  context_instance=RequestContext(request))
 
     else:
         print('error')
         return HttpResponse('Something wrong')
+
+
+def register(request):
+    #заглушка страницы регистрации
+    return render_to_response('info.html',
+                              {'infomsg': 'Register page'},
+                              context_instance=RequestContext(request))
 
 
 def indexpage(request):
