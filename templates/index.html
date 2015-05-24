@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    &nbsp;-&nbsp;mainpage
+{% endblock %}
+
+{% block content %}
+    <div class="uk-grid">
+        <div class="uk-container-center">
+            <h3>Для регистрации в системе введите свой адрес электронной почты</h3>
+            <form action="/mailrequest" method="get" name="emailform">
+                {% csrf_token %}
+                <input type="email" name="email" id="email">
+                <button type="submit">Ok</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
