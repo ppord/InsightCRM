@@ -4,12 +4,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
 
-STATUS_CODES = (
-    (1, _('Open')),
-    (2, _('In progress')),
-    (3, _('Closed')),
-)
-
 USER_ROLES = (
     (1, _('Customer')),
     (2, _('Executor')),
@@ -22,6 +16,12 @@ ACTIONS = (
     (4, _('Close')),
 )
 
+FILETYPES = (
+    (1, _('Image')),
+    (2, _('Archive')),
+    (3, _('Document')),
+    (4, _('Other')),
+)
 
 class Company(models.Model):
     name=models.CharField(max_length=50, verbose_name=_('Company'))
@@ -51,3 +51,10 @@ class Action(models.Model):
     action=models.IntegerField(verbose_name=_('Action'), choices=ACTIONS)
     datetime=models.DateTimeField(verbose_name=_('Addition time'), auto_now_add=True)
     comment=models.TextField(verbose_name=_('Comment'), max_length=1000)
+
+
+class BinaryObject(models.Model):
+    path=models.FileField(verbose_name=_('File path'))
+    action=models.ForeignKey(Action)
+    filetype=models.IntegerField(verbose_name=_('File type'), choices=FILETYPES)
+    description=models.TextField(verbose_name=_('Description'), max_length=200)
