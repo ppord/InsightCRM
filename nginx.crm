@@ -1,0 +1,29 @@
+upstream crm {
+    server unix:///tmp/crm.sock;
+}
+
+server {
+    listen 80;
+    server_name 0.0.0.0;
+    charset utf-8;
+    client_max_body_size 75M;
+
+    location /media {
+        alias /srv/app/crm/media;
+        error_page 404 = @uwsgi;
+    }
+
+    location /static {
+        alias /srv/app/crm/static;
+    }
+
+    location / {
+        uwsgi_pass  crm;
+        include uwsgi_params;
+    }
+
+    location @uwsgi {
+        uwsgi_pass crm;
+        include uwsgi_params;
+        }
+}
