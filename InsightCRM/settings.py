@@ -105,8 +105,8 @@ EMAIL_HOST_PASSWORD='q1w2e3r4'
 EMAIL_HOST_USER='robot@testcloud.ru'
 EMAIL_PORT=465
 EMAIL_USE_SSL=True
-DEFAULT_FROM_EMAIL = 'robot@testcloud.ru'
-
+DEFAULT_FROM_EMAIL='robot@testcloud.ru'
+EMAIL_TIMEOUT=3
 
 
 # Static files (CSS, JavaScript, Images)

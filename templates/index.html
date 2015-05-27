@@ -8,10 +8,10 @@
 
 {#        <div class="uk-container-center">#}
             <h3>Для регистрации в системе введите свой адрес электронной почты</h3>
-            <form action="/mailrequest" method="get" name="emailform" class="uk-form">
+            <form action="/mailrequest" method="post" name="emailform" class="uk-form">
                 <fieldset data-uk-margin>
                     {% csrf_token %}
-                    <label for="email">Email:</label><input type="email" name="email" id="email">
+                    <label for="email">Email:</label><input type="email" name="email" id="email" required>
                     <button class="uk-button" type="submit">Ok</button>
                 </fieldset>
             </form>
