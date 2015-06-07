@@ -66,4 +66,4 @@ def register_user(request):
 
 
 def indexpage(request):
-    return render_to_response('index.html', context_instance=RequestContext(request))
+    return render_to_response('temp.html', context_instance=RequestContext(request))

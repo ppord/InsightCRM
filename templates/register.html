@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    &nbsp;-&nbsp;registration
+{% endblock %}
+
+{% block content %}
+            <h3>Для регистрации в системе введите свой адрес электронной почты</h3>
+            <form action="/register_user" method="post" name="reg_form" class="uk-form">
+                {% csrf_token %}
+                <label for="email">Email</label>
+                <p class="form-control-static" id="email">{{ email }}</p>
+                <input type="hidden" name="email" value="{{ email }}">
+            </form>
+{% endblock %}
