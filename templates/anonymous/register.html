@@ -1,0 +1,20 @@
+{% extends 'anonymous/base.html' %}
+{% block formarea %}
+    <form class="uk-form" method="post" action="/register">
+        {% csrf_token %}
+        <fieldset>
+            <div class="uk-form-row">
+                <label class="uk-form-label" for="password">Придумайте пароль:</label>
+                <div class="uk-form-controls">
+                    <input class="password" type="password" name="password" id="password" />
+                </div>
+            </div>
+            <br />
+            <input type="hidden" name="email" value="{{ email }}">
+            <input type="hidden" name="invite" value="{{ invite }}">
+            <div class="uk-form-row">
+                <button class="uk-button" type="submit">Готово!</button>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}

@@ -40,25 +40,33 @@ def register_user(request):
             try:
                 invite = Invite.objects.get(invite=request.GET['invite'])
                 if invite.valid:
-                    return render_to_response('register.html', {'invite': invite.invite, 'email': invite.email},
+                    return render_to_response('anonymous/register.html', {'invite': invite.invite, 'email': invite.email},
                                               context_instance = RequestContext(request))
                 else:
-                    return render_to_response('info.html', {'infomsg': 'Введен использованный код регистрации'},
+                    return render_to_response('anonymous/info.html', {'infomsg': 'Введен использованный код регистрации'},
                                               context_instance = RequestContext(request))
             except:
-                return render_to_response('info.html', {'infomsg': 'Введен несуществующий код регистрации'},
+                return render_to_response('anonymous/info.html', {'infomsg': 'Введен несуществующий код регистрации'},
                                           context_instance = RequestContext(request))
-        return render_to_response('info.html', {'infomsg': 'Не указан код регистрации.'},
+        return render_to_response('anonymous/info.html', {'infomsg': 'Не указан код регистрации.'},
                                   content_type = "application/json", context_instance = RequestContext(request))
 
     else:
-        form = User_form(data=request.POST)
+        dt = {}
+        dt['email'] = request.POST['email']
+        username = dt['email']
+        username.replace('@', '').replace('.', '').replace('+', '')
+        dt['username'] = username
+        dt['csrfmiddlewaretoken'] = request.POST['csrfmiddlewaretoken']
+        dt['password'] = request.POST['password']
+        # request.POST['username'] = request.POST['email']
+        form = User_form(data=dt)
+
         if not form.is_valid():
             response = {}
             for k in form.errors:
                 response[k] = form.errors[k][0]
-            return HttpResponse(simplejson.dumps({'response': response, 'result': 'error'}),
-                                content_type="application/json")
+            return HttpResponse(dt)
         else:
             form.save()
             invite = Invite.objects.get(invite=request.POST['invite'])
