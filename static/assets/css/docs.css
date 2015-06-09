@@ -47,7 +47,8 @@ html {
  ========================================================================== */
 
 
-.tm-background { background: #252525; }
+/*.tm-background { background: #252525; }*/
+body .tm-background { background: #3A6C51 url("../images/bg_teaser.svg") 50% 0 no-repeat; }
 
 /*
  * Blocks

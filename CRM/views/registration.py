@@ -23,57 +23,51 @@ def send_register_mail(request):
             invite.save()
             send_mail('InsightCRM', 'http://testcloud.ru/register/?invite=%s' % invite.invite,
                       'robot@testcloud.ru', [request.POST['email_reg']])
-            return render_to_response('info.html',
-                                      {'infomsg': 'Email sended.'},
+            return render_to_response('anonymous/info.html',
+                                      {'message': 'На указанный адрес выслана ссылка для продолжения регистрации'},
                                       context_instance=RequestContext(request))
         else:
-            return HttpResponse('Blank email field')
+            return render_to_response('anonymous/info.html',
+                                      {'message': 'Не введен адрес электронной почты'})
 
     except:
-        print('error')
-        return HttpResponse('No email field in request - %s' % (request.POST['email_reg']))
+        return render_to_response('anonymous/info.html',
+                                  {'message': 'No email field in request - %s' % (request.POST['email_reg'])})
 
 
 def register_user(request):
     if request.method == 'GET':
-        if (request.GET['invite'] is not None) and (request.GET['invite'] != ''):
-            try:
-                invite = Invite.objects.get(invite=request.GET['invite'])
-                if invite.valid:
-                    return render_to_response('anonymous/register.html', {'invite': invite.invite, 'email': invite.email},
-                                              context_instance = RequestContext(request))
-                else:
-                    return render_to_response('anonymous/info.html', {'infomsg': 'Введен использованный код регистрации'},
-                                              context_instance = RequestContext(request))
-            except:
-                return render_to_response('anonymous/info.html', {'infomsg': 'Введен несуществующий код регистрации'},
-                                          context_instance = RequestContext(request))
-        return render_to_response('anonymous/info.html', {'infomsg': 'Не указан код регистрации.'},
-                                  content_type = "application/json", context_instance = RequestContext(request))
-
-    else:
-        dt = {}
-        dt['email'] = request.POST['email']
-        username = dt['email']
-        username.replace('@', '').replace('.', '').replace('+', '')
-        dt['username'] = username
-        dt['csrfmiddlewaretoken'] = request.POST['csrfmiddlewaretoken']
-        dt['password'] = request.POST['password']
-        # request.POST['username'] = request.POST['email']
-        form = User_form(data=dt)
-
-        if not form.is_valid():
-            response = {}
-            for k in form.errors:
-                response[k] = form.errors[k][0]
-            return HttpResponse(dt)
-        else:
+        if not 'invite' in request.GET:
+            return render_to_response('anonymous/info.html',
+                                      {'message' : 'Не указан код регистрации'})
+        try:
+            invite = Invite.objects.get(invite=request.GET['invite'])
+        except:
+            return render_to_response('anonymous/info.html',
+                                      {'message' : 'Код регистрации неверен или уже использован'})
+        if not invite.valid:
+            return render_to_response('anonymous/info.html',
+                                      {'message' : 'Код регистрации неверен или уже использован'})
+        data = {}
+        data['email'] = invite.email
+        data['invite'] = invite.invite
+        data['username'] = invite.email
+        return render_to_response('anonymous/register.html', data, context_instance=RequestContext(request))
+    elif request.method == 'POST':
+        form = User_form(data=request.POST)
+        if form.is_valid():
             form.save()
             invite = Invite.objects.get(invite=request.POST['invite'])
             invite.valid = False
             invite.save()
-            return HttpResponse(simplejson.dumps({'response': "Added", 'result': 'success'}))
-
+            return render_to_response('anonymous/info.html',
+                                      {'message' : 'Пользователь успешно зарегистрирован'})
+        else:
+            return render_to_response('anonymous/info.html',
+                                      {'message' : 'Ошибка регистрации пользователя'})
+    else:
+        return render_to_response('anonymous/info.html',
+                                  {'message' : 'Неподдерживаемый метод - %s' % request.method})
 
 def indexpage(request):
     if request.user.is_authenticated():
@@ -95,11 +89,10 @@ def user_login(request):
                 login(request, user)
                 return HttpResponseRedirect('/')
             else:
-                return render_to_response('info.html',
-                                          {'infomsg': 'Пользователь не активирован. Обратитесь к администратору.'}, context_instance=RequestContext(request))
-
+                return render_to_response('anonymous/info.html',
+                                          {'message': 'Пользователь заблокирован. Обратитесь к администратору.'}, context_instance=RequestContext(request))
         else:
-            return render_to_response('info.html', {'infomsg': 'Неправильный пароль!'})
+            return render_to_response('anonymous/info.html', {'message' : 'Неверный адрес электронной почты или пароль!'}, context_instance=RequestContext(request))
 
 
 def user_logout(request):
