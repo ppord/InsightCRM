@@ -41,3 +41,5 @@ docs/_build/
 target/
 .idea/
 UML/
+*.sqlite3
+*.sqlite
