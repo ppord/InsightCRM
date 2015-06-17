@@ -3,19 +3,45 @@
     <head>
         <meta charset="utf-8" />
         <title>Insight CRM</title>
-        <link rel="stylesheet" href="/static/assets/css/uikit.min.css" />
+        <link rel="stylesheet" href="/static/assets/css/uikit.almost-flat.css" />
+{#        <link rel="stylesheet" href="/static/assets/css/uikit.docs.min.css" />#}
+{#        <link rel="stylesheet" href="/static/assets/css/docs.css">#}
         <script src="/static/assets/js/jquery-2.1.4.js"></script>
-        <script src="/static/assets/js/uikit.min.js"></script>
+        <script src="/static/assets/js/uikit.js"></script>
+        <script src="/static/assets/js/core/core.js"></script>
+        <script src="/static/assets/js/core/nav.js"></script>
+        <script src="/static/assets/js/core/dropdown.js"></script>
     </head>
     <body>
         <nav class="uk-navbar">
-            <div class="uk-container uk-container-center">
-                <a class="uk-navbar-brand uk-hidden-small" href="/"><img class="uk-margin uk-margin-remove" src="/static/assets/images/insight.svg" width="30" height="30" title="Insight" alt="Insight"></a>
-                <ul class="uk-navbar-nav uk-hidden-small">
-                    
+            <a class="uk-navbar-brand uk-hidden-small uk-text-left-medium" href="/"><img class="uk-margin uk-margin-remove" src="/static/assets/images/insight.svg" width="30" height="30" title="Insight" alt="Insight">&nbsp;InsightCRM</a>
+            <ul class="uk-nav uk-navbar-nav uk-hidden-small">
+                <li><a>Test</a></li>
+                <li><a>Test</a></li>
+                <li><a>Test</a></li>
+
+            </ul>
+            <div class="uk-navbar-flip">
+                <ul class="uk-nav uk-navbar-nav uk-hidden-small">
+                    <li class="uk-parent" data-uk-dropdown>
+                        <a>Пользователь <i class="uk-icon-caret-down"></i></a>
+
+                        <div class="uk-dropdown uk-dropdown-navbar">
+                            <ul class="uk-nav uk-nav-navbar">
+                                <li><a>Профиль</a></li>
+                                <li><a href="/logout">Выход</a></li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
+
         </nav>
+
+
+
+    {% block content %}
+    {% endblock %}
 
     </body>
 </html>
