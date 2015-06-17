@@ -111,7 +111,9 @@ EMAIL_TIMEOUT=3
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-
+STATICFILES_DIRS = ( 
+      '/home/mihon/projects/InsightCRM/static',  
+)
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = (
