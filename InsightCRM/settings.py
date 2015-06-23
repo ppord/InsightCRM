@@ -115,8 +115,11 @@ EMAIL_TIMEOUT=3
 #       os.path.join(BASE_DIR,  'static'),
 # )
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,  'static')
+#STATIC_ROOT = os.path.join(BASE_DIR,  'static')
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
+)
+STATICFILES_DIRS = ( 
+    '/home/mihon/projects/InsightCRM/static',  
 )
