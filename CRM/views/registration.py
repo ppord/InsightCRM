@@ -85,7 +85,11 @@ def user_login(request):
     else:
         usermail = request.POST['email']
         password = request.POST['password']
-        username = User.objects.get(email=usermail).username
+        try:
+            username = User.objects.get(email=usermail).username
+        except:
+            return render_to_response('anonymous/info.html', {'message' : 'Неверный адрес электронной почты или пароль!'}, context_instance=RequestContext(request))
+
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
