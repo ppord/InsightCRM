@@ -6,7 +6,7 @@ class User_form(ModelForm):
         model=User
         fields=['username', 'email', 'password']
 
-    def save(self, commit = True):
+    def save(self, commit=True):
         user = super(User_form, self).save(commit = False)
         user.set_password(self.cleaned_data["password"])
         if commit:
